@@ -11,3 +11,146 @@ Encoding: UTF-8
 
 RnwWeave: Sweave
 LaTeX: pdfLaTeX
+
+# Global Epidemiology Multimorbidity (GEM) Microsimulation Model
+
+**Last updated:** June 16, 2026
+**Primary author:** Elizabeth Mitchell (ORCID: 0009-0005-7176-7465)
+**Institution:** Emory University
+
+## Overview
+
+The Global Epidemiology Multimorbidity (GEM) Microsimulation Model is an individual-level microsimulation framework designed to project the epidemiologic, health, and economic impacts of chronic disease interventions across countries, age groups, and sexes.
+
+The model was developed between 2025 and 2026 and incorporates population, epidemiologic, mortality, disability, and treatment-effect data from publicly available sources, including the United Nations Population Division, Global Burden of Disease (GBD), and NCD-RisC.
+
+The version accompanying the BMJ submission evaluates the potential population health impact of expanded semaglutide access globally.
+
+## Authors
+
+### Elizabeth Mitchell
+
+* Emory University
+* ORCID: 0009-0005-7176-7465
+* Email: [estaton@emory.edu](mailto:estaton@emory.edu)
+
+### Hui Shao
+
+* Emory University
+* ORCID: 0000-0002-4088-5465
+* Email: [hui.shao@emory.edu](mailto:hui.shao@emory.edu)
+
+## Funding
+
+This work was supported by:
+
+* T32HL130025 (NHLBI)
+* P30DK111024 (NIDDK)
+* R01DK133465 (NIDDK)
+* R01DK143456 (NIDDK)
+
+## Repository Structure
+
+```text
+00_Code/
+├── R/                 Core GEM model functions
+├── scripts/           Analysis pipelines and execution scripts
+└── Python data vis/   Figure-generation scripts
+
+01_Data/
+├── Population data
+├── Epidemiologic inputs
+├── Treatment-effect parameters
+├── Costing inputs
+└── Validation datasets
+```
+
+## Core Data Sources
+
+### Population Data
+
+* United Nations Population Division Data Portal
+
+### Epidemiologic Data
+
+* Global Burden of Disease (GBD)
+* NCD Risk Factor Collaboration (NCD-RisC)
+
+### Additional Inputs
+
+* World Health Organization Global Health Expenditure Database
+* World Bank exchange rate and purchasing power parity data
+* Published cohort studies and meta-analyses
+
+Detailed input documentation is provided in:
+
+* `GEM_documentation_workbook.xlsx`
+* `GEM_input_parameters.xlsx`
+
+## Software Requirements
+
+### R
+
+Primary analyses were conducted using:
+
+```r
+R version 4.5.2
+```
+
+Key package dependencies are loaded automatically by the analysis scripts.
+
+### Python
+
+Figures and visualizations were generated using:
+
+```text
+Python 3.12.7
+```
+
+Primary packages:
+
+* numpy
+* pandas
+* matplotlib
+
+## Running the Model
+
+The main analysis workflow is organized through the scripts in:
+
+```text
+00_Code/scripts/
+```
+
+The primary execution script is:
+
+```text
+00_main.R
+```
+
+This script:
+
+1. Loads required packages and configuration settings
+2. Prepares model inputs
+3. Generates treatment-effect calibrators
+4. Runs the microsimulation
+5. Produces summary outputs and manuscript tables
+
+## Data Availability
+
+Most model inputs are derived from publicly available sources.
+
+Several source datasets require separate download from their original repositories because redistribution restrictions may apply.
+
+Users may substitute updated population or epidemiologic datasets by maintaining the same variable structure and updating configuration settings accordingly.
+
+## Related Publication
+
+Mitchell E, Shao H, et al. Global health impacts of expanded semaglutide access: a microsimulation study.
+
+Conference abstract:
+
+https://diabetesjournals.org/diabetes/article/74/Supplement_1/2043-LB/159453
+
+## License
+
+Please cite the associated publication when using or adapting this model framework.

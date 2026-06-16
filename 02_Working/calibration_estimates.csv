@@ -1,0 +1,2 @@
+outcome,scale,transform,alpha,beta,r2,n
+ac_death,annual_hazard,log h_ref = alpha + beta log h_sim (weighted by sample size),-2.9977122554260234,0.4013759200391832,NA,16

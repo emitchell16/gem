@@ -174,7 +174,6 @@ Contains reference study information and extracted data used in preliminary mode
 
 * `\Python data vis` — Python codes to generate figures including bar charts and circle plots of change over time by region or country
 * `\R` — R code files to set up environment, prepare input data, and run main model
-* `\scripts` — R code that takes user input and runs functions defined in code in `\R` folder
 
 ---
 

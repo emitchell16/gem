@@ -1,0 +1,357 @@
+---
+#GEM Global Semaglutide Access Manuscript
+  AUTHOR: Elizabeth Mitchell; SENIOR AUTHOR: Hui Shao 
+
+  Description: Master workflow file for reproducing manuscript analyses, 
+  tables, figures, and supplementary materials.
+  This script calls all required helper functions,
+  imports input datasets, executes simulations,
+  and generates main manuscript outputs.
+---
+
+*** User Guide Before Running ***
+  - check paths align with local file structure in "setup_environment.R"
+  - generate calibration parameter from model validation 
+      Main code file: "GEM_Model_Validation_00_Main.R" in "00_Code\R\2_validation_simulation_codes" 
+
+# Overview of analysis workflow: execution order of key scripts
+    1. setup_environment.R
+    2. set_in_tables.R
+      "1_function_scripts/"
+          3. GEM_Model_1_Double_Counting_Calibration.R
+          4. GEM_Model_Simulate.R
+          5. GEM_Model_Postsim_Results.R
+
+```{r setup, include=FALSE, echo= FALSE,  warning = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+rm(list=ls())
+
+source(here::here("00_Code", "R", "setup_environment.R"))
+load_gem_packages()
+
+paths <- get_paths()
+
+source(file.path(paths$r_code, "configs.R"))
+
+config <- config_inputs(
+  sample_prop = 0.1
+)
+
+config_sims <- config_simulation(
+  costing = TRUE
+)
+
+print_config(config, config_sims)
+```
+
+# Clean inputs & construct person-level data 
+
+Construct a person-level data set assigning age based on a uniform distribution over the 5-year age ranges. Number of rows is based on median population by sex and age group by country estimated by UN. (UN source https://population.un.org/dataportal). Other cohort-matched rates are used to assign disease statuses.
+
+## Load and clean input data
+
+Main steps:
+  1. Cleans and save country keys
+  2. Loads data for baseline multimorbidity statuses, incidence rates, and death
+  3. Constructs cohort-level dataset for prevalence, incidence, death
+    * METHODS: 
+          Imputation of missing data due to 
+                  (1) country statistic-level missingness in NCD_risc or GBD data 
+                  (2) 33 countries in UN population data but not in NCD_risc or GBD:
+              + averages at the country-category level using WHO region
+              + averages at global level if no WHO region
+              + imputed residual missing values at extreme ages using nearest-neighbor age estimates by country and sex
+
+  * Other notes: 
+    -- GBD methods reference: https://www.healthdata.org/research-analysis/about-gbd/gbd-data-and-tools-guide
+
+```{r prep cohort dataset}
+if (file.exists(file.path(paths$working, "pop_cc_cohort.csv"))) {
+    message("already generated; not re-running")
+} else {
+    source(prep_inputs_path)
+    prep_main_inputs(paths, config)
+    rm(prep_main_inputs)
+}
+```
+
+## Make simulated person-level data, year 0
+
+Main steps:
+  1. Assigns age uniformly by cohort
+  2. Uses cohort-specific prevalence rates to assign disease status, with additional risk adjustment
+  3. Assigns obesity class based on cohort-specific class distributions and generates continuous BMI consistent with assigned BMI status
+
+  * Other notes:
+    -- Population cohorts are generated in chunks and written to temporary Parquet files to reduce memory requirements
+    -- Not parallelized because workers cannot simultaneously access the same temporary file structure
+    -- Cohorts with very small population sizes (<10 individuals) are excluded. This affects 47 country-sex-age cohorts (small territory populations aged >90 years)
+
+```{r sim year 0 baseline data}
+# call inputs generated in prior step:
+cohort_input_data <- read.csv(filePath(paths$working,  "pop_cc_cohort.csv")) |> filter(pop_size > 10)   
+
+y0_output_filename  <- paste0("baseline_yr0_segment_files_", config$in_data_run_date) 
+
+if (file.exists(file.path(paths$working, paste0(y0_output_filename)))) {
+    message("already generated; not re-running")
+} else {
+    # read in codes to generate baseline data
+    source(prep_inputs_path)
+    initialize_baseline(cohort_input_data, paths, config)
+}
+```
+
+## Generate summary statistics on baseline data
+
+  *Results saved to output folder as csv.
+
+```{r y0 summary stats}
+y0_summary_filename <- paste0( "summary_stats_y0fmt_", config$in_data_run_date, ".csv")
+
+source(file.path(paths$fn_scripts, "GEM_Model_1_Baseline_Summary_Stats.R"))
+#Check if result file already exists, don't run:
+if (file.exists(file.path(paths$out, y0_summary_filename))) {
+    message("already generated; not re-running")
+} else {
+    global_summary_conds <- c("female", "obesity", "class1_obesity", "class2_obesity", "class3_obesity", 
+                              "cvd", "ckd", "eskd", "t2d")
+    summary_stats <- global_summary_stats(config, date = config$in_data_run_date)
+    gc(verbose=F)
+}
+```
+
+# Set up for simulation
+
+## Call functions and inputs
+
+The simulation is a state-first annual microsimulation in which an individual's health state at the start of each year (carried forward from the previous year) determines their risks during the current year. Mortality is processed before other condition events to account for competing risk, and disease state transitions are applied after all risks have been evaluated. In intervention scenarios, risks are additionally modified according to GLP-1 treatment status, comorbidities, and applicable treatment effect estimates.
+
+```{r simulation setup}
+# parameter objects ----
+sample_p   <- config$sample_prop
+short_date <- config$short_date
+    
+te_source = config_sims$glp1$treatment_effect_source  # provide primary te source
+
+# load scripts ----
+source(file.path(paths$fn_scripts, "GEM_Model_Risk_Equations.R"))
+source(file.path(paths$fn_scripts, "GEM_Model_Disability_Estimation.R"))
+source(file.path(paths$fn_scripts, "GEM_Model_PSA_Functions.R"))
+source(file.path(paths$fn_scripts, "GEM_Model_TE_Set.R"))
+source(file.path(paths$fn_scripts, "GEM_Model_TE_Update_Obesity_ESKD.R"))
+# main model functions:
+source(file.path(paths$fn_scripts, "GEM_Model_Simulate.R"))
+source(file.path(paths$fn_scripts, "GEM_Model_Update_Cohort_States.R"))
+
+# set input tables & sample values if PSA ----
+source(file.path(paths$r_code, "set_in_tables.R")) 
+
+# for post-simulation ----
+source(file.path(paths$fn_scripts, "GEM_Model_Postsim_Functions.R"))
+source(file.path(paths$fn_scripts, "GEM_Model_Postsim_Results.R"))
+
+# modifiable lists depending on sim run and desired output ----
+  # helpers  
+  price_cols      <- names(glp1_cost_inputs)[grepl("^price_", names(glp1_cost_inputs))]
+  price_suffixes  <- sub("^price_", "", price_cols)
+  cost_treat_cols <- paste0("cost_treat_total_", price_suffixes)
+  cost_total_cols <- paste0("cost_total_", price_suffixes)
+
+conditions_list_outcomes = c(  "obesity", "class1_obesity", "class2_obesity", "class3_obesity",
+                               "ckd_new","cvd_new", "t2d", "t2d_new",  "stroke", "eskd_new", "ac_death")
+daly_list_outcomes = c("yll_adj", "yll",
+                       "yld_adj_total", "yld_total",    
+                       "yld_t2d_adj_total", "yld_cvd_adj_total", "yld_ckd_adj_total") 
+cost_list_outcomes = c(cost_treat_cols, cost_total_cols, "cost_conditions_total", 
+                       "cost_t2d_tot", "cost_cvd_tot", "cost_stroke_tot", "cost_eskd_tot", "cost_ckd_tot", "cost_death_tot")
+
+all_outcomes_list  = c(conditions_list_outcomes, daly_list_outcomes, cost_list_outcomes)
+
+conditions_list    = c("t2d",  "obesity", "cvd", "ckd", "stroke", "eskd",  "ac_death")
+
+# analysis settings ----
+se_ci = FALSE; psa = FALSE
+
+# file management -----
+baseline_files_folder <- filePath(paths$working, paste0("baseline_yr0_segment_files_",  config$in_data_run_date)) 
+wf_withdate  <- file.path(paths$local_temp, paste0("file_sim_", sample_p, "subsample_", config$in_data_run_date)) 
+  if (!dir.exists(wf_withdate)) dir.create(wf_withdate, recursive = TRUE)
+```
+
+Sets previously generated calibration parameter. 
+* Code files to run the calibration and generate "calibration_estimates.csv" live in "/00_code/R/2_validation_simulation_codes"
+
+```{r calibration parameter}
+if (file.exists(file.path(paths$working, "calibration_estimates.csv"))) {
+  acm_calibration <- read.csv(file.path(paths$working, "calibration_estimates.csv"), stringsAsFactors = FALSE)
+}else{acm_calibration <- NULL}
+```
+
+## Create random sample by cohort
+
+A fixed random sample is drawn within each country-age-sex cohort and reused across all simulation scenarios to ensure comparability between baseline and intervention runs. Sampling is implemented in prep_main_inputs.R via the sample_baseline_data() function.
+
+* Random sample is recommended to reduce computational burden and data storage requirements; full-population analyses can be run on a high-performance computing cluster using temporary storage.
+
+```{r subsample baseline cohorts}
+.name_term = paste0("baseline_yr0_subsample_", sample_p,"_", config$in_data_run_date)
+sample_baseline_files <- file.path(paths$working, .name_term) 
+local_sample_files    <- file.path(paths$local_temp,  .name_term)
+                           
+if (sample_p == 1) {
+  message("100% sample, not subsampling")
+  sample_baseline_files <- baseline_files_folder
+} else if (!dir.exists(sample_baseline_files)) {
+  source(prep_inputs_path)
+  sample_baseline_files <- sample_baseline_data()
+  unlink(local_sample_files, recursive = TRUE)
+} else cat("Subsample already generated with proportion", sample_p)
+ 
+```
+
+## Generate treatment effect calibrators
+
+The model applies a hybrid treatment-effect framework that combines direct treatment effects with indirect effects mediated through BMI-related risk reduction. This step generates outcome-specific calibration factors that adjust direct treatment effects to avoid double counting of benefits already captured through changes in BMI and obesity status.
+
+* Performance note: 2 hour run time for 5% sample and 16 workers
+
+```{r treatment impact double counting adjustment calibration}
+dc_test_fp <- file.path(paths$local_temp, 
+                        paste0("file_sim_dctest_subsample_", sample_p, te_source, "_",  config$in_data_run_date)) 
+
+if (file.exists(file.path(paths$working, paste0("double_counting_calibration_results_", te_source , ".csv")))) {  
+    message("already generated; not re-running")
+} else {
+  plan(multisession, workers = 15)      #edit depending on system capabilities
+  if (!dir.exists(dc_test_fp)) dir.create(dc_test_fp, recursive = TRUE)
+  source(file.path(paths$fn_scripts,  "GEM_Model_1_Double_Counting_Calibration.R"))
+  source(file.path(paths$fn_scripts, "GEM_Model_TE_Double_Count_Test_Sim.R"))
+  
+  dc_calibration_fn()
+}
+```
+
+# Main simulation block
+
+Loops over status-quo and intervention scenarios with varying treatment access/uptake scenarios and time horizons
+
+* Performance notes: 
+  -- full-population in HP computing cluster takes 12.5 hours per simulation
+  -- 10% sample takes 2 hours per simulation
+  
+```{r 5-yr simulation runs,  warning = FALSE}
+main_sim_file_management(files_yr0 = sample_baseline_files,
+                         out_folder_path = wf_withdate,
+                         glp1_coverage = 0,
+                         sim_years = 5) 
+
+set_treatment_effect(te_source= "rct", "val") # for primary analysis, as opposed to RWE estimates
+
+for (pct in c(100, 10, 25, 50)) {
+  cat("Starting comparison case: ", pct, "%\n" )
+ main_sim_file_management(files_yr0 = sample_baseline_files,
+                         out_folder_path = wf_withdate,
+                         glp1_coverage = pct,
+                         sim_years = 5)
+}
+```
+
+```{r 5-yr post-sim output}
+.sim_years = 5
+
+for (.glp1_coverage in c(100, 10, 25, 50)){
+  cat("\nStarting: ", .glp1_coverage)
+  summary_out <- file.path(paths$out, "RES_access_scenarios" , 
+                           paste0( .glp1_coverage, "glp1_", sample_p,"sample_", .sim_years, "yr_", short_date))
+  if (!dir.exists(summary_out)) {dir.create(summary_out, recursive = TRUE)}
+  
+  generate_results_tables(sim_hive_folder = wf_withdate, .sim_years, .glp1_coverage, summary_out,
+                        all_outcomes_list,  se_ci, psa)
+  }
+```
+
+```{r 3-yr sim and post-sim}
+.sim_years = 3 ; .glp1_coverage = 100
+
+main_sim_file_management(files_yr0 = sample_baseline_files,
+                         out_folder_path = wf_withdate,
+                         glp1_coverage = 0,
+                         sim_years = .sim_years)
+  cat("Starting comparison case: " )
+set_treatment_effect(te_source= "rct", "val")
+main_sim_file_management(files_yr0 = sample_baseline_files,
+                         out_folder_path = wf_withdate,
+                         glp1_coverage = .glp1_coverage,
+                         sim_years = .sim_years)
+
+  cat("\nStarting post-simulation analysis: " )
+summary_out <- file.path(paths$out, "RES_3yr" , paste0( .glp1_coverage, "glp1_", sample_p,"sample_", .sim_years, "yr_", short_date))
+if (!dir.exists(summary_out)) {dir.create(summary_out, recursive = TRUE)}
+
+generate_results_tables(sim_hive_folder = wf_withdate, .sim_years, .glp1_coverage, summary_out,
+                        all_outcomes_list,  se_ci, psa)
+```
+
+## Generate uncertainty intervals
+
+Run primary simulation using lower and upper bounds of treatment effect (TE) estimates
+
+```{r sim lower bound TE}
+# reset working folder
+wf_withdate  <- file.path(paths$local_temp, "TE sensitivity", paste0("LOWER__file_sim_", sample_p, "subsample_", config$in_data_run_date)) 
+  if (!dir.exists(wf_withdate)) dir.create(wf_withdate, recursive = TRUE)
+
+glp1_impact_data <- set_treatment_effect(te_source= "rct", "lower")
+.sim_years = 5 ; .glp1_coverage = 100
+main_sim_file_management(files_yr0 = sample_baseline_files,
+                         out_folder_path = wf_withdate,
+                         glp1_coverage = .glp1_coverage,
+                         sim_years = .sim_years)
+ 
+summary_out <- file.path(
+  paths$out, "RES_TE_SA" , paste0("LOWER_", .glp1_coverage, "glp1_", sample_p,"sample_", .sim_years, "yr_", short_date))  
+if (!dir.exists(summary_out)) {dir.create(summary_out, recursive = TRUE)}
+  
+generate_results_tables(sim_hive_folder = wf_withdate, .sim_years, .glp1_coverage, summary_out,
+                        all_outcomes_list,  se_ci, psa)
+```
+
+```{r sim upper bound TE}
+wf_withdate  <- file.path(paths$local_temp, "TE sensitivity", paste0("UPPER__file_sim_", sample_p, "subsample_", config$in_data_run_date)) 
+  if (!dir.exists(wf_withdate)) dir.create(wf_withdate, recursive = TRUE)
+
+glp1_impact_data <-set_treatment_effect(te_source= "rct", "upper")
+.sim_years = 5 ; .glp1_coverage = 100
+main_sim_file_management(files_yr0 = sample_baseline_files,
+                         out_folder_path = wf_withdate,
+                         glp1_coverage = .glp1_coverage,
+                         sim_years = .sim_years)
+ 
+summary_out <- file.path(paths$out, "RES_TE_SA", paste0("UPPER_", .glp1_coverage, "glp1_", sample_p,"sample_", .sim_years, "yr_", short_date))  
+if (!dir.exists(summary_out)) {dir.create(summary_out, recursive = TRUE)}
+  
+generate_results_tables(sim_hive_folder = wf_withdate, .sim_years, .glp1_coverage, summary_out,
+                        all_outcomes_list,  se_ci, psa)
+```
+
+## RWE treatment effect sensitivity analysis
+
+```{r sim RWE TE}
+wf_withdate  <- file.path(paths$local_temp, "TE sensitivity", paste0("RWE__file_sim_", sample_p, "subsample_", config$in_data_run_date)) 
+  if (!dir.exists(wf_withdate)) dir.create(wf_withdate, recursive = TRUE)
+
+glp1_impact_data <-set_treatment_effect(te_source= "rwe", "val")
+.sim_years = 5 ; .glp1_coverage = 100
+main_sim_file_management(files_yr0 = sample_baseline_files,
+                         out_folder_path = wf_withdate,
+                         glp1_coverage = .glp1_coverage,
+                         sim_years = .sim_years)
+ 
+summary_out <- file.path(
+  paths$out, "RES_TE_SA" , paste0("RWE_", .glp1_coverage, "glp1_", sample_p,"sample_", .sim_years, "yr_", short_date))  
+if (!dir.exists(summary_out)) {dir.create(summary_out, recursive = TRUE)}
+  
+generate_results_tables(sim_hive_folder = wf_withdate, .sim_years, .glp1_coverage, summary_out,
+                        all_outcomes_list,  se_ci, psa, skip_country_lvl = TRUE)
+```

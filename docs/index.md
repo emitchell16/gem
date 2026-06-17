@@ -1,6 +1,17 @@
 \# Global Epidemiology Multimorbidity (GEM) Microsimulation Model
 
-
+       UN Population
+            GBD
+         NCD-RisC
+            WHO
+             │
+             ▼
+         GEM Model
+             │
+             ▼
+      Disease Burden
+   Intervention Effects
+ Health Economic Outcomes
 
 \## Overview
 

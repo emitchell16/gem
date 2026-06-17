@@ -1,8 +1,14 @@
 <div align="center">
-# Global Epidemiology Multimorbidity (GEM) Microsimulation Model
-</div>
 
-**Resources:** [GitHub Repository](https://github.com/emitchell16/gem) | **Publications:** Manuscripts currently in preparation
+<h1>Global Epidemiology Multimorbidity (GEM) Microsimulation Model</h1>
+
+<p>
+<a href="https://github.com/emitchell16/gem">GitHub Repository</a> |
+<a href="mailto:estaton@emory.edu">Contact</a> |
+Publications: Manuscripts currently in preparation
+</p>
+
+</div>
 
 ## Overview
 
@@ -58,18 +64,13 @@ Mitchell E, Shao H. Global Epidemiology Multimorbidity (GEM) Microsimulation Mod
 
 ## Contact
 
-Elizabeth Mitchell
-
+**Elizabeth Mitchell**
 Emory University
+📧 estaton@emory.edu
 
-estaton@emory.edu
-
-
-Hui Shao
-
+**Hui Shao**
 Emory University
-
-hui.shao@emory.edu
+📧 hui.shao@emory.edu
 
 
 

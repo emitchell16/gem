@@ -1,5 +1,4 @@
 # -------------------'
-# 00_code/R/1_function_scripts/GEM_Model_1_Double_Counting_Calibration.R
 # Run versions of model to estimate indirect TE
 # Generate treatment effect (TE) double counting adjustment calibrators for modeling direct and indirect TEs
 # -------------------'
@@ -135,17 +134,3 @@ dc_calibration_fn <- function() {
   
   print(results)
 }
-
-# scratch process notes ---------
-# for each endpoint c("ac_death", "stroke", "cvd", "ckd", "t2d"): 
-# ac_death HR_implied evaluated in year 1 compared to year 0 ; stroke, cvd,ckd, eskd, t2d in year 2 compared to year 1
-#' run treatment with just lower obesity prevalence 
-#' calculate HR_implied = hazard_treated/hazard_control
-#' compare to clinical trial HR (HRobserved)
-#' compute multiplier = HRobs/HRimplied 
-#' apply to yearly HR risk of event in full simulation for every treated year; starting in year 1 for death; and year 2 for other non-fatal conditions 
-
-# calculate multipliers over test sim, then feed into 3.2_ codes and multiply treatment effect for applicable outcomes
-# note double-counting adjustment not needed for obesity bc there's not a risk equation pathway 
-# external validation and calibration applied only after double counting calibration applied. 
-##############################'

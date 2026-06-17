@@ -1,6 +1,6 @@
 # -------------------'
 # Run 2-year test simulation for calibrating double counting adjustment
-# Last major update: Feb. 2026
+# Date updated: Feb. 2026
 # -------------------'
 
 # 1. File management wrapper function ----------

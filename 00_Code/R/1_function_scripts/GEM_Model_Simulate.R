@@ -70,9 +70,6 @@ main_sim_file_management <- function(files_yr0,
   # Process each file in files_yr0
   # sim_results_by_group <- pblapply(seq_along(files), function(i) {      # change files to test files and vice versa
   sim_results_by_group <- future_lapply(seq_along(files), function(i) {  # parallelized version, faster 
-    # cat("select cohorts only....\n")
-    # sim_results_by_group <- pblapply(c(1781, 1782), function(i) {          # catch to rerun a cohort if code breaks in the middle
-    # sim_results_by_group <- future_lapply(c(20:40), function(i) { 
    
      # check first if cohort sim file already exists (useful if crashed) -----
     for (yr in c(0, sim_years)) {
@@ -84,8 +81,7 @@ main_sim_file_management <- function(files_yr0,
     temp_dir_i <- file.path(temp_dir, paste0("group=", i))
     if (!dir.exists(temp_dir_i)) dir.create(temp_dir_i, recursive = TRUE)
     
-    group_temp_ds <- read_parquet(files[i])  # for non test run 
-    # group_temp_ds <- read_parquet(files[i]) |> head(1e4) ## debug test run only; do first n rows of each file
+    group_temp_ds <- read_parquet(files[i])  
     group_data <- as.data.table(group_temp_ds)
     if (cs$open_pop_cohort){group_data[, pid := as.character(pid)]} else {group_data[, pid := NULL]}
     rm(group_temp_ds)
@@ -278,7 +274,7 @@ simulate_disease_progression <- function(input_data,     # for the sex-country c
     
     rm(year_file, pd, updated_person_data)
     gc(verbose = F)
-    Sys.sleep(0.00001) # time to close file 
+    Sys.sleep(0.00001) 
   }
   return(yearly_data)
 }

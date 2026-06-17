@@ -1,4 +1,8 @@
-# Function to set treatment effect input parameters -----
+# -------------------'
+# Function to set treatment effect input parameters
+# Author: Liz Mitchell
+# Date updated: March 2026
+# -------------------'
 
 #########' set before calling in 00_Top file:
 #########'   te_source = config_sims$glp1$treatment_effect_source

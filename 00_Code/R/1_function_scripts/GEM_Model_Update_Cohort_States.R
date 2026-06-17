@@ -2,8 +2,8 @@
 # GEM Model - Simulate disease status, treatment, and age updates
 # Author: Liz Mitchell
 # Date started:  Feb. 2025
-# wip updating march 2026-- daly etc
-#' -------------------
+# Date updated: March 2026
+# -------------------'
 
 
 # helper function ----- 
@@ -254,14 +254,6 @@ update_cohort <- function(pd, cohort_params, conditions, year,
           global_remit <- living_idx[remit_idx]
           new_state_vals[global_remit, bmi := runif(.N, 18.5, 29.99)]  # normal - overweight range
         }
-        # ##### debugging --------
-        # old_obesity <- pd[living_idx, obesity]
-        # new_obesity <- new_state_vals[living_idx, obesity]
-        # diff_count <- sum(new_obesity != old_obesity, na.rm = TRUE)
-        # if (diff_count > 0) {
-        #   cat("DEBUG: Obesity indicator changed for", diff_count, "individuals.\n")
-        # }
-        # #####'
       }
     
     ######'

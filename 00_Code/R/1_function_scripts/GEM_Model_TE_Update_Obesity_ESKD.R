@@ -1,11 +1,10 @@
 # -------------------'
 # GEM Model - GLP-1 obesity & ESKD adjustment functions
-# Last major update: Feb. 2026
+# Date updated: Feb. 2026
 # -------------------'
 
 ##*****************
 # Function to update ESKD risk with treatment
-# ESKD incidence rate is not cohort-specific (current data limitation)
 
 apply_eskd <- function(indices, glp1_outcome_impact_row, 
                        base_prob, 

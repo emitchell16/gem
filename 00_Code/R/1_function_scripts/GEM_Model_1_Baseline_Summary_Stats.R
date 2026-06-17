@@ -1,7 +1,7 @@
-##############
-# Code to compute global summary statistics for year 0 (full population, no random sampling)
+# -------------------'
+# Compute global summary statistics for year 0 (full population, no random sampling)
 # Uses arrow to read over individual cohort files
-##############
+# -------------------'
 
 global_summary_stats <- function(config, date) {
   

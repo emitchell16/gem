@@ -1,5 +1,6 @@
+#' -------------------------
 #' Apply risk equations with calculate_adjusted_risk()
-#' updated March 2026
+#' Date updated: March 2026
 #' -------------------------
 
 ##*****************

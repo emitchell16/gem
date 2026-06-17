@@ -1,6 +1,8 @@
-#' Functions to get disability weights by disease state
-#' updated March 2026
-#' -------------------------
+# -------------------'
+# Functions to get disability weights by disease state
+# Author: Liz Mitchell
+# Date updated: March 2026
+# -------------------'
 
 ##***************** 
 ## T2D -----
@@ -91,9 +93,6 @@ assign_dw_stroke <- function(updated_data, living_idx, sensitivity) {
   stroke_this_year_idx <- which(
     updated_data[["stroke"]][living_idx] == 1 & updated_data[["stroke_this_year"]][living_idx] == 1)
   if (length(stroke_this_year_idx) > 0) {
-    # acute_frac <- 28 / 365; chronic_frac <- 1 - acute_frac  # to make acute a proportion of year
-    # dw_vec[stroke_this_year_idx] <- (acute_frac * dw_acute_avg) + (chronic_frac * dw_chronic_avg)
-    
     dw_vec[stroke_this_year_idx] <- dw_acute_avg
   }
   dw_vec

@@ -64,11 +64,11 @@ Mitchell E, Shao H. Global Epidemiology Multimorbidity (GEM) Microsimulation Mod
 
 ## Contact
 
-**Elizabeth Mitchell**
+**Elizabeth Mitchell,**
 Emory University
 📧 estaton@emory.edu
 
-**Hui Shao**
+**Hui Shao,**
 Emory University
 📧 hui.shao@emory.edu
 

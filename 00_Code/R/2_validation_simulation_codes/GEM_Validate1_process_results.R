@@ -1,6 +1,9 @@
-#' Function to generate validation tables and figures
+# -------------------'
+#' Generate validation tables and figures
 #' Date: Aug. 2025
 #' Author: Liz Mitchell
+#' # -------------------'
+
 clamp01  <- function(x, eps = 1e-12) pmin(pmax(x, eps), 1 - eps)
 
 process_results <- function(vres_outfile, out_subdir ) {
@@ -298,10 +301,6 @@ process_results <- function(vres_outfile, out_subdir ) {
              colour="black", linewidth=.35) +
     annotate("text", x=.47, y=.47, label="45° line",
              hjust=1, vjust=.5, size=3.5)
-  
-  
-    
-    
 
   ggsave(
     filename = "validation_outcomes_comparison_plot.png",

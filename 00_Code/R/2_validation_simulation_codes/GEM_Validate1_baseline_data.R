@@ -1,4 +1,6 @@
-#' Function to generate baseline year 0 data for model validation studies
+# -------------------'
+#' Generate baseline year 0 data for model validation studies
+# -------------------'
 
 v_initialize_baseline <- function(v_input_data, paths, config = config_inputs){
   tol <- 1e-12

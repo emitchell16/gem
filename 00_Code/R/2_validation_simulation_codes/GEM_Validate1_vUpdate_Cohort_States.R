@@ -2,7 +2,8 @@
 # GEM Model - Simulate disease status, treatment, and age updates
 # VERSION FOR VALIDATION ANALYSIS ALLOWING FOR NON-GLP1 TREATMENT
 # Author: Liz Mitchell
-# Date started:  Feb. 2025 / Updated: Mar. 2026
+# Date started:  Feb. 2025 
+# Date updated: Mar. 2026
 #' -------------------
 
 # helper function ----- 

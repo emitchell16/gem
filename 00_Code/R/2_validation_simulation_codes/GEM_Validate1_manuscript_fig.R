@@ -1,8 +1,8 @@
-#######################
-###' Function 2 to generate validation 2-panel figure for manuscript
-###' Date: Sept. 2025
-###' Author: Liz Mitchell
-#######################
+# -------------------'
+#' Function 2 to generate validation 2-panel figure for manuscript
+#' Date: Sept. 2025
+#' Author: Liz Mitchell
+# -------------------'
 
 make_panel_figs <- function(vres_pre, vres_post=NULL, out_path_png, panel = NULL,
                            xlim = c(0, .5), ylim = c(0, .5)) {
@@ -280,21 +280,3 @@ make_panel_figs <- function(vres_pre, vres_post=NULL, out_path_png, panel = NULL
   ggsave(out_path_png, p, width = 9, height = 10.5, dpi = 300)
   invisible(p)
 }
-
-    
-    
-  
-  ## to add hollow points for before:
-# geom_point(
-#   data = subset(ds_long, phase == "Before"),
-#   aes(color = outcome_label, shape = measure),
-#   size = 4.5, stroke = 0.9, fill = NA
-# ) +
-  ## use shapes 24 and 21 to use "fill" quality
-  
-  
-  
-  
-  
-  
-  

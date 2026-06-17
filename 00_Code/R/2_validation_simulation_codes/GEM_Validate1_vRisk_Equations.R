@@ -1,5 +1,6 @@
+# -------------------'
 #' Apply risk equations with calculate_adjusted_risk()
-#' updated March 2026
+#' Date updated: March 2026
 #' -------------------------
 
 ##*****************
@@ -270,25 +271,6 @@ calculate_adjusted_risk <- function(cond, inc_probs, matched_params, pd, living_
     risk_params <- list(obesity_multiplier, t2d_multiplier, cvd_multiplier, ckd_multiplier)
     combined_multiplier <- Reduce(`*`, risk_params)
     inc_probs <-  pmin(1, inc_probs * combined_multiplier)
-    
-    # #DEBUG --------
-    # #debug helper
-    # check_vec <- function(x, name) {
-    #   bad <- which(is.na(x) | !is.finite(x))
-    #   if (length(bad)) {
-    #     message("[", name, "] bad n=", length(bad),
-    #             " (NA=", sum(is.na(x)), ", Inf=", sum(is.infinite(x)), ")",
-    #             " example idx=", paste(head(bad, 10), collapse=","))
-    #     return(bad)
-    #   }
-    #   integer(0)
-    # }
-    # bad_ob <- check_vec(obesity_multiplier, "obesity_multiplier")
-    # bad_t2d <- check_vec(t2d_multiplier, "t2d_multiplier")
-    # bad_cvd <- check_vec(cvd_multiplier, "cvd_multiplier")
-    # bad_ckd <- check_vec(ckd_multiplier, "ckd_multiplier")
-    # bad_comb <- check_vec(combined_multiplier, "combined_multiplier")
-    # #############'
     
     ### joint adjustment ------
       ### 1. t2d-obesity ----

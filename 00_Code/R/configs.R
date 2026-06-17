@@ -1,43 +1,30 @@
+# -------------------'
 # 00_Code/R/configs.R
-
+# -------------------'
 
 # description ------
-#' Purpose: provide defaults for simulation model configurations
-#' Users can override any of the following fields:
-#'
-#' Core run settings:
-#'   seed                Integer RNG seed
-#'   sim_years           Simulation time horizon (years)
-#'   treatment_enabled   TRUE/FALSE
-#'   sample_prop         Proportion of each cohort sampled (0-1)
-#'   psa                 TRUE/FALSE
-#'
-#' Input data years:
-#'   UN_data_yr
-#'   GBD_data_yr
-#'   NCDRisC_data_yr
+# This file defines default settings for:
+#   1. Input data selection (config_inputs)
+#   2. Simulation settings (config_simulation)
+# Users can override any parameter by passing values when creating a configuration object.
+# Key settings:
+# - Data years (UN, GBD, NCD-RisC)
+# - Simulation horizon and random seed
+# - Cohort sampling proportion
+# - Treatment on/off
+# - GLP-1 treatment assumptions
+# - DALY and costing sensitivity analyses
+#
+# Example:
+# input_data_config <- config_inputs(
+#   sample_prop = 0.20)
+# simulation_config <- config_simulation(
+#   sim_years = 10,
+#   glp1 = list(coverage_rate = 0.25))
+#
+# Use print_config() to display the active configuration prior to model runs.
 
-#'   
-#' Model parameters:
-#'   min_age_model       Minimum modeled age (>= 12)
-#'   country_inclusion   "max" | "has_rate_data" (drop the 31 territories with UN pop data not in GBD or NCD-RisC datasets)
-#'
-#' GLP-1 settings (nested in $glp1):
-#'   coverage_rate       Proportion treated (0-1)
-#'   drug_type          "semaglutide"
-#'   indication          "all" | "t2d_only" | "obese_only"
-#'   treat_strategy      Selection strategy for targeted treatment (currently placeholder)
-#'   adherence_vs_rct    Effect scaling factor (0-1)
-#'   treatment_effect_source  "rct" | "rwe" for sensitivity 
-#'   open_pop_cohort     Whether new people added to cohort each year as they age-in
-#'   daly_sensitivity           Whether to use primary or sensitivity daly inputs/equations
-#'
-#' Example:
-#' config <- config_base_glp1(
-#'   seed = 5,
-#'   treatment_enabled = TRUE,
-#'   glp1 = list(coverage_rate = 0.25)
-#' )
+# -------------------------------------------------------------------------
 
 # define -----
 config_inputs <- function(...) {
@@ -45,7 +32,7 @@ config_inputs <- function(...) {
     UN_data_yr            = 2024L,
     GBD_data_yr           = 2023L,  # life table, disability weights, incidence, prevalence, mortality
     NCDRisC_data_yr       = 2022L,
-    country_inclusion     = "max", 
+    country_inclusion     = "max", # all territories with available data
     min_age_model = 12L,
     sample_prop   = 0.1,
     
@@ -71,11 +58,11 @@ config_simulation <- function(...) {
     
     # GLP-1 treatment settings (only used if treatment_enabled=TRUE)
     glp1 = list(
-      coverage_rate      = 1,          # 0-1 (e.g., 0.25 = 25% eligible treated)
+      coverage_rate      = 1,          # proportion treated: 0-1 (e.g., 0.25 = 25% eligible treated)
       indication         = "all",      # "all" | "t2d only" | "obese_only"  
       treat_strategy     = "random",   # "random" | "age_risk" | "t2d_only" | "cvd_risk" etc target populations *(#TODO not currently coded) 
       adherence_vs_rct   = 1,          # 0-1; simple multiplier on effect or uptake                             *(#TODO not currently coded) 
-      treatment_effect_source = "rct",  # rct vs rwe   
+      treatment_effect_source = "rct", # rct vs rwe   
       drug_type    = "semaglutide",
       treatment_cost_scenario  = "price_intl_rwe"   # current options: "price_id_sust_costx1" | "price_id_sust_costx3" | "price_intl_rwe" (var names in glp1_cost_inputs table)
       )

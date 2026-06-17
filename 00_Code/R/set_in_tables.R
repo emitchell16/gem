@@ -1,6 +1,7 @@
+# -------------------'
 #' GEM simulation input data tables
 #' run 1x per simulation
-#' -------------------------
+# -------------------'
 
 ##############'
 # Helpers ----

@@ -1,5 +1,6 @@
+# -------------------'
 # 00_Code/R/prep_main_inputs.R
-#TODO add life expectancy table load and clean from GBD
+# -------------------'
 
 #***********
 #* 1. Reads UN, NCD-RisC, GBD data files in 01_Data folder -------------
@@ -93,9 +94,6 @@ prep_main_inputs <- function(paths, config) {
   write_csv(country_name_iso, file.path(paths$working, "country_name_iso_mapping.csv"))
   write.csv(country_groups, file.path(paths$working, "who_world_bank_country_groups_iso_cleaned.csv") )
   write.csv(country_income_groups_2, file.path(paths$working, "country_income_groups_2.csv") )
-  
-  ###############################'
-  ###############################'
   
   #  Load data for multimorbidity prevalence, incidence, and death ---------------
 

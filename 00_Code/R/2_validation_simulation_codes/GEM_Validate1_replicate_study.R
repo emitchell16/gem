@@ -1,5 +1,6 @@
+# -------------------'
 #' Define functions to replicate input studies with GEM model
-
+# -------------------'
 # 1. Function to run simulation ---------
 gem_simulate <- function(input_data = y0_person_data, sim_years, 
                          apply_treatment = FALSE, te_input = NULL,

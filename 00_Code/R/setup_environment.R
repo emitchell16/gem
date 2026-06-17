@@ -1,5 +1,6 @@
+# -------------------'
 # 00_Code/R/setup_environment.R
-
+# -------------------'
 load_gem_packages <- function() {
   pkgs <- c(
     "tidyverse", "stringi", "pbapply", "writexl", "readxl",

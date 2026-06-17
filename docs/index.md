@@ -36,7 +36,7 @@ Simulation of semaglutide access ranging from 10% to 100% treatment coverage amo
 
 Evaluation of the model's ability to reproduce observed chronic disease incidence and mortality patterns over multi-year follow-up periods using population-based cohort studies from diverse geographic regions. This validation framework assesses the extent to which internationally available epidemiologic inputs (including GBD and NCD-RisC estimates) can accurately project long-term disease outcomes beyond single-year forecasting horizons.
 
-*Manuscript in preparation*
+*Analysis in progress.*
 
 ## Methods
 

@@ -3,7 +3,7 @@
 <h1>Global Epidemiology Multimorbidity (GEM) Microsimulation Model</h1>
 
 <p align="center">
-  <img src="gem-circle.png" width="240">
+  <img src="gem-circle.png" width="200">
 </p>
 
 
@@ -42,7 +42,7 @@ Detailed descriptions of model development, input data sources, calibration proc
 <h3 align="center">Global Epidemiology Multimorbidity (GEM) Microsimulation Model Algorithm</h3>
 
 <p align="center">
-  <img src="gem-flow.png" width="800">
+  <img src="gem-flow.png" width="400">
 </p>
 
 

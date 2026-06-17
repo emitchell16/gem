@@ -2,6 +2,11 @@
 
 <h1>Global Epidemiology Multimorbidity (GEM) Microsimulation Model</h1>
 
+<p align="center">
+  <img src="gem-circle.png" width="800">
+</p>
+
+
 <p>
 <a href="https://github.com/emitchell16/gem">GitHub Repository</a> |
 <a href="mailto:estaton@emory.edu">Contact</a> |
@@ -22,7 +27,7 @@ The model was developed to address the need for globally applicable simulation t
 ## Current Applications of the GEM Model
 
 
-### Global Semaglutide Access Scenarios \& Cost-Effectiveness Analysis
+### Global GLP-1 Receptor Agonist Access Scenarios & Cost-Effectiveness Analysis
 
 Simulation of semaglutide access ranging from 10% to 100% treatment coverage among individuals with obesity and/or type 2 diabetes, with projected impacts on obesity prevalence, cardio-renal-metabolic disease incidence, stroke, and mortality.
 

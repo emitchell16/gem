@@ -8,7 +8,7 @@
 
 
 <p>
-<a href="https://github.com/emitchell16/gem">GitHub Repository</a> |
+<a href="https://github.com/emitchell16/gem" target="_blank">GitHub Repository</a> |
 <a href="mailto:estaton@emory.edu">Contact</a> |
 Publications: Manuscripts currently in preparation
 </p>

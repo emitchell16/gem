@@ -3,7 +3,7 @@
 <h1>Global Epidemiology Multimorbidity (GEM) Microsimulation Model</h1>
 
 <p align="center">
-  <img src="gem-circle.png" width="400">
+  <img src="gem-circle.png" width="240">
 </p>
 
 

@@ -28,11 +28,15 @@ The model was developed to address the need for globally applicable simulation t
 
 ### Global GLP-1 Receptor Agonist Access Scenarios & Cost-Effectiveness Analysis
 
-Simulation of semaglutide access ranging from 10% to 100% treatment coverage among individuals with obesity and/or type 2 diabetes, with projected impacts on obesity prevalence, cardio-renal-metabolic disease incidence, stroke, and mortality.
+Simulation of semaglutide access ranging from 10% to 100% treatment coverage among individuals with obesity and/or type 2 diabetes, with projected impacts on obesity prevalence, cardiometabolic and kidney disease incidence, stroke, and mortality.
+
+*Preliminary findings were presented at the American Diabetes Association Scientific Sessions 2025. Manuscript in preparation.*
 
 ### Long-Term Epidemiologic Validation Across Global Populations
 
 Evaluation of the model's ability to reproduce observed chronic disease incidence and mortality patterns over multi-year follow-up periods using population-based cohort studies from diverse geographic regions. This validation framework assesses the extent to which internationally available epidemiologic inputs (including GBD and NCD-RisC estimates) can accurately project long-term disease outcomes beyond single-year forecasting horizons.
+
+*Manuscript in preparation*
 
 ## Methods
 

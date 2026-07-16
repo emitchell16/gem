@@ -1,6 +1,6 @@
 # Global Epidemiology Multimorbidity (GEM) Microsimulation Model
 
-*This readme file was generated on 2025-11-04 and last updated on 2026-06-16 by Elizabeth Mitchell.*
+*This readme file was generated on 2025-11-04 and last updated on 2026-07-16 by Elizabeth Mitchell.*
 
 # GENERAL INFORMATION
 
@@ -22,6 +22,8 @@
 **Address:** Atlanta, GA
 **Email:** [hui.shao@emory.edu](mailto:hui.shao@emory.edu)
 
+# OVERVIEW
+
 * Date of data collection: January 2025 - May 2026
 * Type of data: published estimates, cohort studies, epidemiological and population data
 * Date of initial model development: 2025-2026
@@ -31,7 +33,7 @@
 
 # SHARING/ACCESS INFORMATION
 
-* Licenses/restrictions placed on the data: Input data from public sources
+* Licenses/restrictions placed on the data: Input data from public sources, some of which have individual access requirements
 * Links to publications that cite or use the data: https://diabetesjournals.org/diabetes/article/74/Supplement_1/2043-LB/159453
 * Links to other publicly accessible locations of the data:
 
@@ -40,14 +42,18 @@
 1. United Nations Population Division. Home Page | Data Portal [Internet]. Population Division Data Portal. Available from:
    https://population.un.org/dataportal/home?df=f48f8e56-4fa5-4a22-bbd4-8b066cb8b1b9
 
-2. Global Burden of Disease (GBD) [Internet]. Available from: https://www.healthdata.org/research-analysis/gbd-data
+2. Global Burden of Disease Collaborative Network. Global Burden of Disease Study 2023 (GBD 2023). Seattle, United States: Institute for Health Metrics and Evaluation (IHME), 2025. Available from: https://www.healthdata.org/research-analysis/gbd-data
 
-   To download data from GBD:
-   Link: https://vizhub.healthdata.org/gbd-results/
+      * Not provided in this repository in accordance with the applicable data use agreement. To reproduce the analyses, obtain the GBD 2023 data directly and extract the variables using the same variable names and file names as in the placeholder files "IHME-GBD_*_2023.csv"
+      * To download data from GBD:
+   https://vizhub.healthdata.org/gbd-results/
 
-3. NCD-RisC. National Adult BMI > Data Download [Internet]. Available from: https://ncdrisc.org/data-downloads-adiposity.html
+   
+3. NCD Risk Factor Collaboration (NCD-RisC). National Body-Mass Index Data Download. Available from: https://ncdrisc.org/data-downloads-adiposity.html
+      * Not provided in this repository in accordance with the applicable data use agreement. To reproduce the analyses, obtain the NCD-RisC 2024 data directly and extract the variables using the same variable names and file names as in the placeholder files "NCD_RisC_Lancet_2024_BMI_*.csv"
 
-*FOR OTHERS SEE FILE "GEM_documentation_workbook.xlsx"*
+        
+#### FOR OTHER DATA INPUTS AND CITATIONS SEE FILE "GEM_documentation_workbook.xlsx"*
 
 ---
 

@@ -1,0 +1,90 @@
+<div align="center">
+
+<h1>Global Epidemiology Multimorbidity (GEM) Microsimulation Model</h1>
+
+<p align="center">
+  <img src="gem-circle.png" width="150">
+</p>
+
+
+<p>
+<a href="https://github.com/emitchell16/gem" target="_blank">GitHub Repository</a> |
+<a href="mailto:estaton@emory.edu">Contact</a> 
+</p>
+
+</div>
+
+## Overview
+
+The Global Epidemiology Multimorbidity (GEM) Microsimulation Model is a population health simulation platform designed to project the burden of chronic diseases and the potential impact of clinical and public health interventions across diverse global populations. 
+
+By integrating demographic and epidemiologic data from the United Nations, the Global Burden of Disease (GBD) Study, NCD Risk Factor Collaboration (NCD-RisC), and the World Health Organization (WHO), GEM projects future health outcomes, quantifies disease burden, and estimates the population-level effects of interventions across countries, age groups, and sexes.
+
+The model was developed to address the need for globally applicable simulation tools, particularly in settings where empirical evidence is unavailable. GEM can be adapted to evaluate the health and economic impacts of a wide range of interventions and policy scenarios.
+
+
+## Current Applications of the GEM Model
+
+
+### Global GLP-1 Receptor Agonist Access Scenarios & Cost-Effectiveness Analysis
+
+Simulation of semaglutide access expansion, with projected health and economic impacts under current and optimistic future pricing scenarios.
+
+*Preliminary findings were presented at the American Diabetes Association Scientific Sessions 2025. Manuscript in preparation.*
+
+### Long-Term Epidemiologic Validation Across Global Populations
+
+Evaluation of the model's ability to reproduce observed chronic disease incidence and mortality patterns over multi-year follow-up periods using population-based cohort studies from diverse geographic regions. This validation framework assesses the extent to which internationally available epidemiologic inputs (including GBD and NCD-RisC estimates) can accurately project long-term disease outcomes beyond single-year forecasting horizons.
+
+*Analysis in progress.*
+
+## Methods
+
+Detailed descriptions of model development, input data sources, calibration procedures, validation analyses, and application-specific methods are available in the project README, and associated manuscripts and supplementary appendices.
+
+### GEM Microsimulation Model Algorithm
+
+<p align="center">
+  <img src="GEM algorithm flowchart.png" width="700">
+</p>
+
+--- 
+GEM relies on published, evidence-based risk equations and was validated against external cohort and trial results.
+
+<p align="center">
+  <img src="GEM_risk_equation_diagram.png" width="700">
+</p>
+
+---
+
+## Repository Structure
+
+- `00\_Code/`: source code for data processing, model development, simulation, calibration, and analysis
+
+- `01\_Data/`: input data
+
+- `docs/`: project website files
+
+- `GEM_documentation_workbook.xlsx`: documentation workbook with references for model inputs and studies used in validation
+
+
+## Citation
+
+If you use the GEM Microsimulation Model in research, please cite:
+
+Mitchell E, Shao H. Global Epidemiology Multimorbidity (GEM) Microsimulation Model. GitHub repository. 2026.
+
+## Contact
+
+**Elizabeth Mitchell,**
+Emory University
+📧 estaton@emory.edu
+
+**Hui Shao,**
+Emory University
+📧 hui.shao@emory.edu
+
+
+
+*Researchers interested in applying or extending the GEM framework are encouraged to contact the model developers to discuss potential collaboration.*
+

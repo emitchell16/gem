@@ -45,14 +45,14 @@ Detailed descriptions of model development, input data sources, calibration proc
 ### GEM Microsimulation Model Algorithm
 
 <p align="center">
-  <img src="GEM algorithm flowchart.png" width="700">
+  <img src="GEM algorithm flowchart.png" width="500">
 </p>
 
 --- 
 GEM relies on published, evidence-based risk equations and was validated against external cohort and trial results.
 
 <p align="center">
-  <img src="GEM_risk_equation_diagram.png" width="700">
+  <img src="GEM_risk_equation_diagram.png" width="600">
 </p>
 
 ---
@@ -72,7 +72,8 @@ GEM relies on published, evidence-based risk equations and was validated against
 
 If you use the GEM Microsimulation Model in research, please cite:
 
-Mitchell E, Shao H. Global Epidemiology Multimorbidity (GEM) Microsimulation Model. GitHub repository. 2026.
+Mitchell E, Shao H. Global Epidemiology Multimorbidity (GEM) Microsimulation Model. 2026. https://github.com/emitchell16/gem 
+
 
 ## Contact
 

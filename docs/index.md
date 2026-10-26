@@ -3,7 +3,7 @@
 <h1>Global Epidemiology Multimorbidity (GEM) Microsimulation Model</h1>
 
 <p align="center">
-  <img src="gem-circle.png" width="150">
+  <img src="gem-circle.png" width="160">
 </p>
 
 
@@ -59,9 +59,9 @@ GEM relies on published, evidence-based risk equations and was validated against
 
 ## Repository Structure
 
-- `00\_Code/`: source code for data processing, model development, simulation, calibration, and analysis
+- `00_Code/`: source code for data processing, model development, simulation, calibration, and analysis
 
-- `01\_Data/`: input data
+- `01_Data/`: input data
 
 - `docs/`: project website files
 

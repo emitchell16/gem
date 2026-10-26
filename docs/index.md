@@ -22,22 +22,7 @@ By integrating demographic and epidemiologic data from the United Nations, the G
 
 The model was developed to address the need for globally applicable simulation tools, particularly in settings where empirical evidence is unavailable. GEM can be adapted to evaluate the health and economic impacts of a wide range of interventions and policy scenarios.
 
-
-## Current Applications of the GEM Model
-
-
-### Global GLP-1 Receptor Agonist Access Scenarios & Cost-Effectiveness Analysis
-
-Simulation of semaglutide access expansion, with projected health and economic impacts under current and optimistic future pricing scenarios.
-
-*Preliminary findings were presented at the American Diabetes Association Scientific Sessions 2025. Manuscript in preparation.*
-
-### Long-Term Epidemiologic Validation Across Global Populations
-
-Evaluation of the model's ability to reproduce observed chronic disease incidence and mortality patterns over multi-year follow-up periods using population-based cohort studies from diverse geographic regions. This validation framework assesses the extent to which internationally available epidemiologic inputs (including GBD and NCD-RisC estimates) can accurately project long-term disease outcomes beyond single-year forecasting horizons.
-
-*Analysis in progress.*
-
+--- 
 ## Methods
 
 Detailed descriptions of model development, input data sources, calibration procedures, validation analyses, and application-specific methods are available in the project README, and associated manuscripts and supplementary appendices.
@@ -48,7 +33,10 @@ Detailed descriptions of model development, input data sources, calibration proc
   <img src="GEM algorithm flowchart.png" width="500">
 </p>
 
---- 
+ 
+
+### Risk Equations
+
 GEM relies on published, evidence-based risk equations and was validated against external cohort and trial results.
 
 <p align="center">
@@ -56,6 +44,7 @@ GEM relies on published, evidence-based risk equations and was validated against
 </p>
 
 ---
+
 
 ## Repository Structure
 
@@ -66,7 +55,23 @@ GEM relies on published, evidence-based risk equations and was validated against
 - `docs/`: project website files
 
 - `GEM_documentation_workbook.xlsx`: documentation workbook with references for model inputs and studies used in validation
+---
 
+## Current Applications of the GEM Model
+
+#### <span style="margin-left: 2em;"><u>Global GLP-1 Receptor Agonist Access Scenarios & Cost-Effectiveness Analysis</u></span>
+
+Simulation of semaglutide access expansion, with projected health and economic impacts under current and optimistic future pricing scenarios.
+
+*Preliminary findings were presented at the American Diabetes Association Scientific Sessions 2025. Manuscript in preparation.*
+
+
+#### <span style="margin-left: 2em;"><u>Long-Term Epidemiologic Validation Across Global Populations</u></span>
+Evaluation of the model's ability to reproduce observed chronic disease incidence and mortality patterns over multi-year follow-up periods using population-based cohort studies from diverse geographic regions. This validation framework assesses the extent to which internationally available epidemiologic inputs (including GBD and NCD-RisC estimates) can accurately project long-term disease outcomes beyond single-year forecasting horizons.
+
+*Analysis in progress.*
+
+---
 
 ## Citation
 

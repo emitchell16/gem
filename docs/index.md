@@ -55,7 +55,9 @@ GEM relies on published, evidence-based risk equations and was validated against
 - `docs/`: project website files
 
 - `GEM_documentation_workbook.xlsx`: documentation workbook with references for model inputs and studies used in validation
+
 ---
+
 
 ## Current Applications of the GEM Model
 
@@ -72,6 +74,7 @@ Evaluation of the model's ability to reproduce observed chronic disease incidenc
 *Analysis in progress.*
 
 ---
+
 
 ## Citation
 

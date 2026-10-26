@@ -35,6 +35,7 @@ GEM is an open microsimulation model of obesity, type 2 diabetes (T2D), cardiova
 * Date of initial model development: 2025-2026
 * EM & HS funding sources that supported the project: T32HL130025 (NHLBI), P30DK111024 (NIDDK), R01DK133465 (NIDDK), and 1R01DK143456 (NIDDK)
 
+
 ---
 
 # SHARING/ACCESS INFORMATION
@@ -43,7 +44,8 @@ GEM is an open microsimulation model of obesity, type 2 diabetes (T2D), cardiova
 * Links to publications that cite or use the data: https://diabetesjournals.org/diabetes/article/74/Supplement_1/2043-LB/159453
 * Links to other publicly accessible locations of the data:
 
-          ### Key Sources
+
+### Key Sources
 
 1. United Nations Population Division. Home Page | Data Portal [Internet]. Population Division Data Portal. Available from:
    https://population.un.org/dataportal/home?df=f48f8e56-4fa5-4a22-bbd4-8b066cb8b1b9
@@ -83,6 +85,7 @@ GEM is an open microsimulation model of obesity, type 2 diabetes (T2D), cardiova
 ---
 
 # DATA & FILE OVERVIEW
+
 ## Input data
 
 Raw GBD, NCD-RisC and UN files are not included (data use agreements). Download each file and save it in `01_Data/` with the name below. `<year>` is the data year set in `config_inputs()`.
@@ -146,6 +149,7 @@ Contains reference study information and extracted data used in model validation
 
 Set `GEM_DATA_DIR` if the input data are not in `01_Data/`.
 
+
 ### Run the core model
 
 ```r
@@ -166,6 +170,7 @@ manifest <- run_gem(input_data_config, list(my_scenario = simulation_config))
 With a project module it also simulates an intervention arm against the shared comparison arm and writes result tables to `03_Out/results_<run tag>/`.
 
 Typical order for a full analysis: validation and mortality calibration (`00_Code/R/2_validation_simulation_codes/GEM_Model_Validation_00_Main.R`), primary runs, PSA, results and figures.
+
 
 ### Add an intervention
 
@@ -201,6 +206,7 @@ Settings use `config_semaglutide()`:
 simulation_config <- config_semaglutide(sim_years = 10, glp1 = list(coverage_rate = 0.25))
 ```
 
+
 ### Outputs
 
 ##### Core: 
@@ -218,7 +224,8 @@ Person-level simulation files in the local temp folder (`sim=<label>/year=<y>/`)
 ## Citation
 
 Mitchell E, Shao H. Global Epidemiology Multimorbidity (GEM) Microsimulation Model. Version 1.0. 2026. https://github.com/emitchell16/gem
-Publication: <DOI tba>
+
+Publication: DOI TBA
 
 ## License
 

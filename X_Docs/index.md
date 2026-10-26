@@ -63,7 +63,7 @@ GEM relies on published, evidence-based risk equations and was validated against
 
 - `01\_Data/`: input data
 
-- `docs/`: project website files
+- `X_Docs/`: project website files
 
 - `GEM_documentation_workbook.xlsx`: documentation workbook with references for model inputs and studies used in validation
 

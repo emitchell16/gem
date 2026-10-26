@@ -52,7 +52,7 @@ Detailed descriptions of model development, input data sources, calibration proc
 GEM relies on published, evidence-based risk equations and was validated against external cohort and trial results.
 
 <p align="center">
-  <img src="GEM algorithm flowchart.png" width="400">
+  <img src="GEM_risk_equation_diagram.png" width="400">
 </p>
 
 ---

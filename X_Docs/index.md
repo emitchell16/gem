@@ -42,7 +42,7 @@ Evaluation of the model's ability to reproduce observed chronic disease incidenc
 
 Detailed descriptions of model development, input data sources, calibration procedures, validation analyses, and application-specific methods are available in the project README, and associated manuscripts and supplementary appendices.
 
-<h3 align="center">*GEM Microsimulation Model Algorithm*</h3>
+### GEM Microsimulation Model Algorithm
 
 <p align="center">
   <img src="GEM algorithm flowchart.png" width="700">
@@ -52,7 +52,7 @@ Detailed descriptions of model development, input data sources, calibration proc
 GEM relies on published, evidence-based risk equations and was validated against external cohort and trial results.
 
 <p align="center">
-  <img src="GEM_risk_equation_diagram.png" width="400">
+  <img src="GEM_risk_equation_diagram.png" width="700">
 </p>
 
 ---

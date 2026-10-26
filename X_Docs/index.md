@@ -3,7 +3,7 @@
 <h1>Global Epidemiology Multimorbidity (GEM) Microsimulation Model</h1>
 
 <p align="center">
-  <img src="gem-circle.png" width="200">
+  <img src="gem-circle.png" width="150">
 </p>
 
 
@@ -16,11 +16,11 @@
 
 ## Overview
 
-The Global Epidemiology Multimorbidity (GEM) Microsimulation Model is a population health simulation framework designed to evaluate the burden of chronic diseases and the potential impact of clinical and public health interventions across diverse global populations. 
+The Global Epidemiology Multimorbidity (GEM) Microsimulation Model is a population health simulation platform designed to project the burden of chronic diseases and the potential impact of clinical and public health interventions across diverse global populations. 
 
-By integrating demographic and epidemiologic data from the United Nations, the Global Burden of Disease (GBD) Study, NCD Risk Factor Collaboration (NCD-RisC), and the World Health Organization (WHO), GEM projects future health outcomes, quantifies disease burden, and estimates the population-level effects of prevention and treatment strategies across countries, age groups, and sexes.
+By integrating demographic and epidemiologic data from the United Nations, the Global Burden of Disease (GBD) Study, NCD Risk Factor Collaboration (NCD-RisC), and the World Health Organization (WHO), GEM projects future health outcomes, quantifies disease burden, and estimates the population-level effects of interventions across countries, age groups, and sexes.
 
-The model was developed to address the need for globally applicable simulation tools, particularly in settings where empirical evidence is unavailable. GEM leverages internationally standardized data sources to support analyses across a large number of countries and territories and can be adapted to evaluate the health and economic impacts of a wide range of diseases, interventions, and policy scenarios.
+The model was developed to address the need for globally applicable simulation tools, particularly in settings where empirical evidence is unavailable. GEM can be adapted to evaluate the health and economic impacts of a wide range of interventions and policy scenarios.
 
 
 ## Current Applications of the GEM Model
@@ -28,7 +28,7 @@ The model was developed to address the need for globally applicable simulation t
 
 ### Global GLP-1 Receptor Agonist Access Scenarios & Cost-Effectiveness Analysis
 
-Simulation of semaglutide access ranging from 10% to 100% treatment coverage among individuals with obesity and/or type 2 diabetes, with projected impacts on obesity prevalence, cardiometabolic and kidney disease incidence, stroke, and mortality.
+Simulation of semaglutide access expansion, with projected health and economic impacts under current and optimistic future pricing scenarios.
 
 *Preliminary findings were presented at the American Diabetes Association Scientific Sessions 2025. Manuscript in preparation.*
 
@@ -40,28 +40,32 @@ Evaluation of the model's ability to reproduce observed chronic disease incidenc
 
 ## Methods
 
-Detailed descriptions of model development, input data sources, calibration procedures, validation analyses, and application-specific methods are available in the project README, associated manuscripts, and supplementary appendices.
+Detailed descriptions of model development, input data sources, calibration procedures, validation analyses, and application-specific methods are available in the project README, and associated manuscripts and supplementary appendices.
 
-<h3 align="center">Global Epidemiology Multimorbidity (GEM) Microsimulation Model Algorithm</h3>
+<h3 align="center">*GEM Microsimulation Model Algorithm*</h3>
 
 <p align="center">
-  <img src="gem-flow.png" width="700">
+  <img src="GEM algorithm flowchart.png" width="700">
 </p>
 
+--- 
+GEM relies on published, evidence-based risk equations and was validated against external cohort and trial results.
+
+<p align="center">
+  <img src="GEM algorithm flowchart.png" width="400">
+</p>
+
+---
 
 ## Repository Structure
 
 - `00\_Code/`: source code for data processing, model development, simulation, calibration, and analysis
 
-- `01\_Data/`: input data required for model execution
-
-- `02\_Working/`: intermediate files. currently contains post-validation calibration parameters required for reproducibility
-
-- `03\_Results/`: user-generated output files, simulation results, tables, and figures created after running the model.
+- `01\_Data/`: input data
 
 - `docs/`: project website files
 
-- `GEM\_documentation\_workbook.xlsx`: documentation workbook with references for model inputs, epidemiologic parameters, and studies used in validation
+- `GEM_documentation_workbook.xlsx`: documentation workbook with references for model inputs and studies used in validation
 
 
 ## Citation
@@ -82,5 +86,5 @@ Emory University
 
 
 
-*Researchers interested in applying or extending the GEM framework are encouraged to contact the model developers to discuss potential collaboration and appropriate acknowledgment of model development contributions.*
+*Researchers interested in applying or extending the GEM framework are encouraged to contact the model developers to discuss potential collaboration.*
 

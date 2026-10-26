@@ -12,16 +12,20 @@ GEM is an open microsimulation model of obesity, type 2 diabetes (T2D), cardiova
 
 **Name:** Elizabeth Mitchell
 **ORCID:** 0009-0005-7176-7465
+
 **Institution:** Emory University
 **Address:** Atlanta, GA
+
 **Email:** [estaton@emory.edu](mailto:estaton@emory.edu) / [ec.mitchell3@gmail.com](mailto:ec.mitchell3@gmail.com)
 
 ## Co-Author Information
 
 **Name:** Hui Shao
 **ORCID:** 0000-0002-4088-546
+
 **Institution:** Emory University
 **Address:** Atlanta, GA
+
 **Email:** [hui.shao@emory.edu](mailto:hui.shao@emory.edu)
 
 ## Overview
@@ -29,7 +33,7 @@ GEM is an open microsimulation model of obesity, type 2 diabetes (T2D), cardiova
 * Date of data collection: January 2025 - May 2026; Parameters last updated: Oct 2026
 * Type of data: published estimates, cohort studies, epidemiological and population data
 * Date of initial model development: 2025-2026
-* Information about EM & HS funding sources that supported the project: T32HL130025 (NHLBI), P30DK111024 (NIDDK), R01DK133465 (NIDDK), and 1R01DK143456 (NIDDK)
+* EM & HS funding sources that supported the project: T32HL130025 (NHLBI), P30DK111024 (NIDDK), R01DK133465 (NIDDK), and 1R01DK143456 (NIDDK)
 
 ---
 
@@ -39,23 +43,20 @@ GEM is an open microsimulation model of obesity, type 2 diabetes (T2D), cardiova
 * Links to publications that cite or use the data: https://diabetesjournals.org/diabetes/article/74/Supplement_1/2043-LB/159453
 * Links to other publicly accessible locations of the data:
 
-### Key Sources
+          ### Key Sources
 
 1. United Nations Population Division. Home Page | Data Portal [Internet]. Population Division Data Portal. Available from:
    https://population.un.org/dataportal/home?df=f48f8e56-4fa5-4a22-bbd4-8b066cb8b1b9
 
 2. Global Burden of Disease Collaborative Network. Global Burden of Disease Study 2023 (GBD 2023). Seattle, United States: Institute for Health Metrics and Evaluation (IHME), 2025. Available from: https://www.healthdata.org/research-analysis/gbd-data
 
-      * Not provided in this repository in accordance with the applicable data use agreement. To reproduce the analyses, obtain the GBD 2023 data directly and save the files with the names given in "Input data" below
-      * To download data from GBD:
-   https://vizhub.healthdata.org/gbd-results/
+      * To download: https://vizhub.healthdata.org/gbd-results/
 
    
 3. NCD Risk Factor Collaboration (NCD-RisC). National Body-Mass Index Data Download. Available from: https://ncdrisc.org/data-downloads-adiposity.html
-      * Not provided in this repository in accordance with the applicable data use agreement. To reproduce the analyses, obtain the NCD-RisC 2024 data directly and save the files with the names given in "Input data" below
-
+  
         
-#### FOR OTHER DATA INPUTS AND CITATIONS SEE FILE "GEM_documentation_workbook.xlsx"
+#### FOR OTHER DATA INPUTS AND CITATIONS SEE "GEM_documentation_workbook.xlsx"
 
 
 ## Repository layout
@@ -125,14 +126,12 @@ Semaglutide project (`00_Code/projects/semaglutide_global_access/`):
 
 #### Country groups file
 
-`who_world_bank_country_groups_iso.csv` columns: `iso3` (ISO 3166-1 alpha-3), `who_region` (WHO region), `world_bank_income_group` (World Bank income group).
+`who_world_bank_country_groups_iso.csv` columns: `iso3` (ISO 3 code), `who_region` (WHO region), `world_bank_income_group` (World Bank income group).
 
 #### GEM_data_validation_workbook.xlsx
 
 Contains reference study information and extracted data used in model validation.
 
-
-*Note: Users can download and use different years of population and epidemiological data to model different years. It is recommended to use the same file naming conventions and specify the `_data_yr` variables in the config function.*
 ---
 
 ---
@@ -204,9 +203,14 @@ simulation_config <- config_semaglutide(sim_years = 10, glp1 = list(coverage_rat
 
 ### Outputs
 
-Core: person-level simulation files in the local temp folder (`sim=<label>/year=<y>/`), `scenario_manifest.csv`, and per-scenario tables in `03_Out/results_<run tag>/<label>/`.
+##### Core: 
 
-Semaglutide project (in `03_Out/results_<run tag>/`, added by its module): `all_scenarios_access.csv`, `all_scenarios_outcomes.csv`, `status_quo_summary.csv`, `results_summary_fmt.xlsx`, `figures/`, and `psa/`.
+Person-level simulation files in the local temp folder (`sim=<label>/year=<y>/`), `scenario_manifest.csv`, and per-scenario tables in `03_Out/results_<run tag>/<label>/`.
+
+##### Semaglutide project (in `03_Out/results_<run tag>/`, added by its module): 
+
+`all_scenarios_access.csv`, `all_scenarios_outcomes.csv`, `status_quo_summary.csv`, `results_summary_fmt.xlsx`, `figures/`, and `psa/`.
+
 ---
 
 

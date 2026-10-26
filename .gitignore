@@ -1,0 +1,23 @@
+# R
+.Rhistory
+.RData
+.Rproj.user/
+.Renviron
+*.nb.html
+
+# input data: licensed files (IHME GBD, NCD-RisC, UN, World Bank) must not be shared; users supply them (see README)
+#01_Data/*
+#!01_Data/GEM_input_parameters.xlsx
+#!01_Data/who_world_bank_country_groups_iso.csv
+
+# model-written folders, results and large files
+02_Working/
+03_Out/
+*.parquet
+*.rds
+*.feather
+
+# OS / editor / Office
+.DS_Store
+Thumbs.db
+~$*

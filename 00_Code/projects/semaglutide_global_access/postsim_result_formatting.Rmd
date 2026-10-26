@@ -1,0 +1,115 @@
+---
+title: "Post-sim graphing and formatting"
+output: html_notebook
+---
+
+```{r setup}
+# notebook chunks run in the Rmd folder, not the repo root -> paths from here::here()
+.code <- if (dir.exists(here::here("00_Code"))) here::here("00_Code") else here::here()   # repo layout: 00_Code/ or flat
+source(file.path(.code, "R", "setup_environment.R")); load_gem_packages(); source(file.path(.code, "R", "configs.R"))
+paths <- get_paths()
+source_gem_modules(paths, file.path(.code, "projects", "semaglutide_global_access", "R"))   # core + GLP-1 module (plots)
+
+run_tag <- "10.20"                                          # results_<run_tag> (and gem_sims_..._<run_tag>)
+build_from_sims <- FALSE                                    # TRUE: sims -> plot csv files (a few minutes)
+res_dir <- file.path(paths$out, paste0("results_", run_tag))
+fig_dir <- file.path(res_dir, "figures")
+show <- function(f) knitr::include_graphics(file.path(fig_dir, f), rel_path = FALSE)
+
+if (build_from_sims) {
+  cand <- list.dirs(paths$local_temp, recursive = FALSE)
+  cand <- cand[grepl(paste0("^gem_sims_.*_", gsub(".", "\\.", run_tag, fixed = TRUE), "$"), basename(cand))]
+  if (!length(cand)) stop("no gem_sims_*_", run_tag, " folder in ", paths$local_temp)
+  out_root <- cand[which.max(file.info(cand)$mtime)]        # newest if several (e.g. test and full run)
+  man <- fread(file.path(out_root, "scenario_manifest.csv"))
+  print(man[, .(config, label, base_label, mode)])
+  gem_plot_data(out_root, res_dir, man, circle_configs = c("tier1to6", "tier1to6_full"),
+                tier_configs = paste0("tier1to", 1:6), ce_configs = c("tier1to6", "tier1to6_full"))
+}
+cat("Results:", res_dir, "\n"); print(list.files(fig_dir, pattern = "\\.csv$"))
+```
+
+# circle plots
+```{r}
+# 1. single-scenario circle plots: tiers 1-6 optimistic and full uptake (same scales) -----
+plot_gem_circles(NULL, res_dir, configs = c("tier1to6", "tier1to6_full"))
+show(list.files(fig_dir, pattern = "^circle_iso3_.*\\.png$"))
+
+# 2. tier expansion circle plots (one per measure + obesity/deaths by WHO region and by income group) -----
+expansion_scenarios_circleplot(NULL, res_dir, measures = c("deaths", "dalys", "obesity"), obesity_deaths = TRUE)
+show(c("expansion_obesity_deaths_who_region.png", "expansion_obesity_deaths_wb_income.png",
+       "expansion_deaths.png", "expansion_dalys.png", "expansion_obesity.png"))
+```
+
+#simplified expansion bar charts
+```{r}
+# from all_scenarios_outcomes.csv + plot csv files (obesity); groups: WHO region and World Bank income group
+#   v1: status quo vs tiers 1-6 optimistic vs tiers 1-6 full;  v2: reduction vs status quo stacked by tier step (navy scale as 1.2.)
+#   uptake range in labels read from 01_Data/GEM_input_parameters.xlsx (sheet glp1_uptake); uptake_fp = to use another file
+for (b in c("who_region", "wb_income")) {
+  plot_bar_overall(res_dir, by = b)
+  plot_bar_expansion(res_dir, by = b)
+}
+show(c("bar_overall_who_region.png", "bar_overall_wb_income.png", "bar_expansion_who_region.png", "bar_expansion_wb_income.png"))
+```
+
+
+#cost effectiveness/ICER etc 
+```{r}
+
+# needs costing on (cost_effect_by_country.csv); price scenarios: id_sust_costx1, id_sust_costx3, intl_rwe,
+#   id_lowest_mp, id_generic_entry, tc_zero (drug cost 0)
+ce_sc <- c("id_sust_costx1", "id_sust_costx3", "intl_rwe")
+for (cf in c("tier1to6", "tier1to6_full")) {
+  plot_ce_plane(res_dir, config = cf, scenarios = ce_sc)           # share_y = FALSE: own y-axis per panel
+  plot_country_icer(res_dir, config = cf, scenarios = ce_sc)
+}
+show(paste0(rep(c("ce_plane_", "ce_country_icer_"), 2), rep(c("tier1to6", "tier1to6_full"), each = 2), ".png"))
+
+# maximum cost-effective price (% of current market price) by country, and share cost-effective by price -----
+#   needs tc_zero, intl_rwe, id_sust_costx3, id_sust_costx1 in cost_effect_by_country.csv; thresholds: ce_wtp_ig
+#   small outlier countries left out (adults < 25th percentile and outlying max price): ce_price_left_out.csv
+plot_ce_max_price(res_dir, configs = c("tier1to6", "tier1to6_full"))
+plot_ce_price_curve(res_dir, configs = c("tier1to6", "tier1to6_full"))
+show(c("ce_max_price_by_country.png", "ce_price_curve.png"))
+```
+
+# key cost-effectiveness figures (key1_, key2_, key3_)
+```{r}
+# thresholds (Int$ per DALY averted) and exclusions: change here; passed to all key CE figures
+ce_wtp_ig    <- c("low income" = 500, "lower middle income" = 1000, "upper middle income" = 5000, "high income" = 5000)
+ce_wtp_extra <- c(intl_rwe = 50000)                  # extra line on current market price panels only (high-income convention)
+ce_exclude   <- "CUB"                                 # outlier countries left out (named in captions)
+ce_sc        <- c("id_sust_costx1", "id_sust_costx3", "intl_rwe")
+upt_note     <- ce_uptake_note()                      # caption: uptake assumption (sheet glp1_uptake)
+
+# 1. maximum cost-effective price by country (tiers 1-6, primary uptake)
+plot_ce_max_price(res_dir, configs = "tier1to6", wtp_ig = ce_wtp_ig, exclude = ce_exclude, caption_extra = upt_note,
+                  out_file = "key1_ce_max_price_by_country.png")
+# 2. country ICER at current market prices
+plot_country_icer(res_dir, config = "tier1to6", scenarios = "intl_rwe", wtp_ig = ce_wtp_ig, wtp_extra = ce_wtp_extra,
+                  exclude = ce_exclude, caption_extra = upt_note, out_file = "key2_ce_country_icer_market_price.png")
+# 3. CE plane, 3 drug price scenarios
+plot_ce_plane(res_dir, config = "tier1to6", scenarios = ce_sc, wtp_ig = ce_wtp_ig, wtp_extra = ce_wtp_extra,
+              exclude = ce_exclude, caption_extra = upt_note, out_file = "key3_ce_plane_by_price.png")
+show(c("key1_ce_max_price_by_country.png", "key2_ce_country_icer_market_price.png", "key3_ce_plane_by_price.png"))
+
+# income-group ICER plots are no longer made: remove old files
+invisible(file.remove(list.files(fig_dir, "^ce_incomegroup_icer_", full.names = TRUE)))
+```
+
+# PSA: ICER intervals with drug cost fixed (PSA already run, no rerun)
+```{r}
+# drug price = scenario variable (not sampled); per PSA run: ICER = (condition cost change + fixed drug cost) / DALYs averted
+#   fixed drug cost: primary run of the same scenario (cost_effect_by_country.csv, tier1to6); WHO regions + global
+# copy from the local temp folder (gem_sims_f0.05_n400_10.20/psa_<label>/) into 03_Out/results_10.20/psa:
+#   psa_runs_partial.rds (preferred: batch rows -> Monte Carlo noise removed) or final/psa_results_all_runs.csv
+psa_dir <- file.path(res_dir, "psa")
+f_rds <- list.files(psa_dir, "^psa_runs_partial\\.rds$", full.names = TRUE)
+f_csv <- list.files(psa_dir, "^psa_results_all_runs.*\\.csv$", full.names = TRUE)
+if (!length(c(f_rds, f_csv))) stop("no PSA run results in ", psa_dir)
+psa_res <- if (length(f_rds)) readRDS(f_rds[1]) else fread(f_csv[1])
+psa_ce <- psa_icer_fixed_drug(psa_res, file.path(fig_dir, "cost_effect_by_country.csv"), ce_config = "tier1to6",
+                              out_dir = psa_dir)                 # writes psa_icer_fixed_drug_by_region.csv, psa_ceac_fixed_drug_by_region.csv
+psa_ce$icer[who_region == "global", .(price, icer, icer_low, icer_high, dalys_averted_mean, inc_cost_mean, mc_adjusted)]
+```
